@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spam Callback Tool</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>&#9742; Spam Callback Tool</h1>
+      <p class="subtitle">Waste their time so they can't waste yours.</p>
+    </header>
+
+    <section class="panel">
+      <h2>New Call</h2>
+      <form id="callForm">
+        <div class="field">
+          <label for="phoneNumber">Target Number (E.164)</label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            placeholder="+15551234567"
+            required
+            autocomplete="off"
+            spellcheck="false"
+          >
+        </div>
+        <div class="field">
+          <label for="persona">Persona</label>
+          <select id="persona">
+            <option value="grandma">Edna — Confused Grandma (scripted)</option>
+            <option value="ai">AI Edna — Confused Grandma (Claude-powered)</option>
+            <option value="holdmusic">Infinite Hold Music</option>
+            <option value="techsupport">Kevin — Windows Tech Support</option>
+            <option value="insurance">Larry — Insurance Salesman</option>
+            <option value="prince">The Prince — Nigerian Royalty</option>
+            <option value="agent">Agent Johnson — SSA Fraud Division</option>
+          </select>
+        </div>
+        <button type="submit" id="callBtn">&#9742; Place Call</button>
+      </form>
+      <div id="callStatus" class="status hidden"></div>
+    </section>
+
+    <section class="panel">
+      <h2>
+        Recent Calls
+        <button id="refreshBtn" class="btn-ghost">&#8635; Refresh</button>
+      </h2>
+      <div id="callLog"><p class="empty">No calls yet.</p></div>
+    </section>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
