@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const basicAuth = require('express-basic-auth');
 const { getPersona, listPersonas } = require('./src/personas');
 const { initiateCall } = require('./src/caller');
 const logger = require('./src/logger');
@@ -8,9 +9,9 @@ const { clearConversation } = require('./src/ai');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static('public'));
 
-// Initial TwiML when the call is answered
+// ── Twilio webhooks (no auth — Twilio must reach these freely) ──────────────
+
 app.post('/voice', async (req, res) => {
   const persona = req.query.persona || 'grandma';
   const callSid = req.body.CallSid;
@@ -34,7 +35,6 @@ app.post('/voice', async (req, res) => {
   }
 });
 
-// Gather callback — Twilio posts here after speech/DTMF is collected
 app.post('/voice/gather', async (req, res) => {
   const persona = req.query.persona || 'grandma';
   const step = parseInt(req.query.step || '0', 10);
@@ -61,7 +61,6 @@ app.post('/voice/gather', async (req, res) => {
   }
 });
 
-// Twilio status callback — fires when call ends
 app.post('/voice/status', (req, res) => {
   const { CallSid, CallStatus, CallDuration } = req.body;
   if (CallSid) {
@@ -71,7 +70,23 @@ app.post('/voice/status', (req, res) => {
   res.sendStatus(200);
 });
 
-// API: initiate a call from the web UI
+// ── Basic auth — everything below this line is protected ───────────────────
+
+if (process.env.UI_USER && process.env.UI_PASS) {
+  app.use(basicAuth({
+    users: { [process.env.UI_USER]: process.env.UI_PASS },
+    challenge: true,
+    realm: 'Spam Callback Tool',
+  }));
+  console.log('Basic auth enabled');
+} else {
+  console.warn('Warning: UI_USER / UI_PASS not set — web UI is unprotected');
+}
+
+app.use(express.static('public'));
+
+// ── Protected API + UI routes ───────────────────────────────────────────────
+
 app.post('/api/call', async (req, res) => {
   const { number, persona } = req.body;
   const publicUrl = process.env.PUBLIC_URL;
@@ -94,12 +109,10 @@ app.post('/api/call', async (req, res) => {
   }
 });
 
-// API: recent call logs
 app.get('/api/calls', (req, res) => {
   res.json(logger.getRecentLogs(50));
 });
 
-// API: available personas
 app.get('/api/personas', (req, res) => {
   res.json(listPersonas());
 });
@@ -114,7 +127,7 @@ function fallbackTwiml() {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Webhook server running on port ${port}`);
+  console.log(`Server running on port ${port}`);
   console.log(`Web UI: http://localhost:${port}`);
   console.log(`Personas: ${listPersonas().join(', ')}`);
 });
