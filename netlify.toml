@@ -5,6 +5,6 @@
 # Replace the `to` URL with your actual Render service URL after deploying there first.
 [[redirects]]
   from = "/api/*"
-  to = "https://prank-call-backend.onrender.com/api/:splat"
+  to = "https://prank-call-backend-p2t8.onrender.com/api/:splat"
   status = 200
   force = true
