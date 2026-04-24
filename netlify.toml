@@ -1,0 +1,10 @@
+[build]
+  publish = "public"
+
+# Proxy /api/* to the Render backend so the frontend can use relative URLs.
+# Replace the `to` URL with your actual Render service URL after deploying there first.
+[[redirects]]
+  from = "/api/*"
+  to = "https://prank-call-backend.onrender.com/api/:splat"
+  status = 200
+  force = true
