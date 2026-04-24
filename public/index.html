@@ -3,18 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spam Callback Tool</title>
+  <title>Callback Operator — Mr. Gray Enterprises</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+  <div class="scanlines"></div>
+
   <div class="container">
     <header>
-      <h1>&#9742; Spam Callback Tool</h1>
+      <div class="header-badge">&#9632; SECURE OPERATOR CONSOLE &#9632;</div>
+      <h1>&#9742; CALLBACK<span class="accent"> OPERATOR</span></h1>
       <p class="subtitle">Waste their time so they can't waste yours.</p>
     </header>
 
     <section class="panel">
-      <h2>New Call</h2>
+      <h2><span class="panel-dot"></span>New Call</h2>
       <form id="callForm">
         <div class="field">
           <label for="phoneNumber">Target Number (E.164)</label>
@@ -28,7 +34,7 @@
           >
         </div>
         <div class="field">
-          <label for="persona">Persona</label>
+          <label for="persona">Select Persona</label>
           <select id="persona">
             <option value="grandma">Edna — Confused Grandma (scripted)</option>
             <option value="ai">AI Edna — Confused Grandma (Claude-powered)</option>
@@ -39,19 +45,31 @@
             <option value="agent">Agent Johnson — SSA Fraud Division</option>
           </select>
         </div>
-        <button type="submit" id="callBtn">&#9742; Place Call</button>
+        <button type="submit" id="callBtn">
+          <span class="btn-icon">&#9742;</span>
+          <span class="btn-text">INITIATE CALL</span>
+        </button>
       </form>
       <div id="callStatus" class="status hidden"></div>
     </section>
 
     <section class="panel">
       <h2>
-        Recent Calls
+        <span class="panel-dot"></span>Recent Calls
         <button id="refreshBtn" class="btn-ghost">&#8635; Refresh</button>
       </h2>
       <div id="callLog"><p class="empty">No calls yet.</p></div>
     </section>
   </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">&#9670;</div>
+      <p class="footer-brand">Created and Coded by <span class="footer-accent">Mr. Gray Enterprises, Inc.</span></p>
+      <p class="footer-copy">&copy; 2026 Mr. Gray Enterprises, Inc. All rights reserved.</p>
+    </div>
+  </footer>
+
   <script src="/app.js"></script>
 </body>
 </html>
